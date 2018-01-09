@@ -5,3 +5,4 @@
 dist/
 org.sbgn/build/
 org.sbgn/gensrc/
+org.sbgn/target/
