@@ -13,11 +13,26 @@ import org.jdom.Namespace;
 import org.jdom.input.SAXBuilder;
 import org.jdom.output.XMLOutputter;
 
+/**
+ * The Class ConvertMilestone1to2.
+ */
 public class ConvertMilestone1to2
 {
+	
+	/** The namespace for milestone 1. */
 	static Namespace M1 = Namespace.getNamespace("http://sbgn.org/libsbgn/pd/0.1");
+	
+	/** The namespace for milestone 2. */
 	static Namespace M2 = Namespace.getNamespace("http://sbgn.org/libsbgn/0.2");
 	
+	/**
+	 * Convert a milestone 1 file to milestone 2.
+	 *
+	 * @param in the original m1 file
+	 * @param out the target m2 file
+	 * @throws JDOMException the JDOM exception
+	 * @throws IOException the IO exception
+	 */
 	public static void convert(File in, File out) throws JDOMException, IOException
 	{
 		SAXBuilder builder = new SAXBuilder();
@@ -44,8 +59,14 @@ public class ConvertMilestone1to2
 		xo.output(doc, new FileWriter(out));
 	}
 
+	/** The existing ids. */
 	Set<String> existingIds = new HashSet<String>();
 	
+	/**
+	 * Builds the id list.
+	 *
+	 * @param elt the root element of the subtree
+	 */
 	private void buildIdList(Element elt)
 	{
 		String id = elt.getAttributeValue("id");
@@ -61,8 +82,15 @@ public class ConvertMilestone1to2
 		
 	}
 
+	/** The next id. */
 	int nextId = 0;
 	
+	/**
+	 * Generate id.
+	 *
+	 * @param prefix the prefix
+	 * @return the string
+	 */
 	private String generateId (String prefix)
 	{
 		String val;
@@ -75,6 +103,11 @@ public class ConvertMilestone1to2
 		return val;
 	}
 	
+	/**
+	 * Recursivley add arc ids.
+	 *
+	 * @param elt the root of the subtree
+	 */
 	private void addArcIds(Element elt)
 	{
 		if ("arc".equals (elt.getName()))
@@ -95,6 +128,11 @@ public class ConvertMilestone1to2
 		}
 	}
 	
+	/**
+	 * Recursively change namespace.
+	 *
+	 * @param elt the element rooting the subtree
+	 */
 	private static void recursivelyChangeNamespace(Element elt)
 	{
 		elt.setNamespace(M2);
@@ -104,6 +142,11 @@ public class ConvertMilestone1to2
 		}
 	}
 
+	/**
+	 * Recursively change stoichiometry.
+	 *
+	 * @param elt the element rooting the subtree
+	 */
 	private static void recursivelyChangeStoichiometry(Element elt)
 	{
 		if ("stoichiometry".equals (elt.getAttributeValue("class")))
@@ -116,9 +159,11 @@ public class ConvertMilestone1to2
 	}
 
 	/**
-	 * Class can be used as utility to convert a single file
-	 * @throws IOException 
-	 * @throws JDOMException 
+	 * Class can be used as utility to convert a single file.
+	 *
+	 * @param args the args
+	 * @throws JDOMException the JDOM exception
+	 * @throws IOException the IO exception
 	 */
 	public static void main(String [] args) throws JDOMException, IOException
 	{

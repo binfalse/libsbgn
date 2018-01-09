@@ -12,7 +12,11 @@ public enum Language
 	private Language(String name) { this.name = name; }
 	private final String name;
 	
-	/** String representation, suitable for use on the language attribute of the map element in SBGN-ML */
+	/**
+	 * String representation, suitable for use on the language attribute of the map element in SBGN-ML.
+	 *
+	 * @return the name
+	 */
 	public String getName() { return name; }
 	
 	public String toString() { return name; }
